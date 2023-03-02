@@ -1,7 +1,9 @@
 from typing import Optional
-
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi import Response
+import pymssql
+import json
 
 app = FastAPI()
 
@@ -17,6 +19,31 @@ class Course(BaseModel):
 @app.get("/")
 def get_home():
     return {"message": "Hello World - Ankit Rocks!  Testing From VS"}
+
+@app.get("/db")
+def db_test():
+    conn = pymssql.connect(
+    server="40.114.74.64",
+    port=1401,
+    user="amvmdev23",
+    password="AMvmdev-2023!",
+    database="AM_PRIME_2_DEV")
+  
+    print("conn done")
+    cursor = conn.cursor(as_dict=True)
+    print("cursor done")
+    cursor.execute('SELECT name_last, name_first, current_latest_position FROM people')
+    json_string = json.dumps(cursor.fetchall()) 
+    #row = cursor.fetchone()
+    #for row in cursor:
+    #    the_row_id = row['id']
+    #    print(row['id'])
+        
+    conn.close()
+
+    return json_string
+
+    return the_row_id
 
 
 @app.get("/courses")

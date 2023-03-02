@@ -6,4 +6,5 @@ starlette==0.13.6
 typing-extensions==3.7.4.3
 uvicorn
 gunicorn
+pymssql
 

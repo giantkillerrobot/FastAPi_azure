@@ -16,7 +16,7 @@ class Course(BaseModel):
 
 @app.get("/")
 def get_home():
-    return {"message": "Hello World - Ankit Rocks!"}
+    return {"message": "Hello World - Ankit Rocks!  Testing From VS"}
 
 
 @app.get("/courses")

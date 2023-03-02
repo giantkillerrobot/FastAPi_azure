@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-guvicorn = "*"
+gunicorn = "*"
 
 [dev-packages]
 

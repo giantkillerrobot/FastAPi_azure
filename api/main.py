@@ -42,7 +42,7 @@ def db_test():
     cursor.execute('SELECT name_last, name_first, current_latest_position FROM people')
     json_string = json.dumps(cursor.fetchall()) 
     conn.close()
-    return json_string
+    return Response(content=json_string, media_type='application/json')
 
 
 @app.get("/courses")

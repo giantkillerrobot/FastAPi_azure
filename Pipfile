@@ -8,6 +8,7 @@ fastapi = "*"
 gunicorn = "*"
 pymssql = "*"
 uvicorn = "*"
+requests = "*"
 
 [dev-packages]
 

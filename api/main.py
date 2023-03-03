@@ -22,28 +22,23 @@ def get_home():
 
 @app.get("/db")
 def db_test():
-    conn = pymssql.connect(
-    server="40.114.74.64",
-    port=1401,
-    user="amvmdev23",
-    password="AMvmdev-2023!",
-    database="AM_PRIME_2_DEV")
-  
-    print("conn done")
+    try:
+        conn = pymssql.connect(
+        server="40.114.74.64",
+        port=1401,
+        user="amvmdev23",
+        password="AMvmdev-2023!",
+        database="AM_PRIME_2_DEV")
+        
+        
+    except Exception as e:
+      return e
+    
     cursor = conn.cursor(as_dict=True)
-    print("cursor done")
     cursor.execute('SELECT name_last, name_first, current_latest_position FROM people')
     json_string = json.dumps(cursor.fetchall()) 
-    #row = cursor.fetchone()
-    #for row in cursor:
-    #    the_row_id = row['id']
-    #    print(row['id'])
-        
     conn.close()
-
     return json_string
-
-    return the_row_id
 
 
 @app.get("/courses")

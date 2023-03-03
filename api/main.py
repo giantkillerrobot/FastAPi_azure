@@ -28,11 +28,12 @@ def db_test():
         port=1401,
         user="amvmdev23",
         password="AMvmdev-2023!",
-        database="AM_PRIME_2_DEV")
+        database="AM_PRIME_2_DEV123")
         
         
     except Exception as e:
-      return e
+        print("e==",e)
+        return str(e)
     
     cursor = conn.cursor(as_dict=True)
     cursor.execute('SELECT name_last, name_first, current_latest_position FROM people')

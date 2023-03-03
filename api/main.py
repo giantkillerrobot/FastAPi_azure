@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from fastapi import Response
 import pymssql
 import json
+import requests
+
 
 app = FastAPI()
 
@@ -18,7 +20,8 @@ class Course(BaseModel):
 
 @app.get("/")
 def get_home():
-    return {"message": "Hello World - Ankit Rocks!  Testing From VS"}
+    ip = requests.get('https://api.ipify.org').text
+    return {"message": f" my ip is {ip}"}
 
 @app.get("/db")
 def db_test():
@@ -28,7 +31,7 @@ def db_test():
         port=1401,
         user="amvmdev23",
         password="AMvmdev-2023!",
-        database="AM_PRIME_2_DEV123")
+        database="AM_PRIME_2_DEV")
         
         
     except Exception as e:

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi import Response
@@ -31,7 +31,7 @@ class Course(BaseModel):
     id:int
     name:str
     price:float
-    is_early_bird: Optional[bool] = None
+    #is_early_bird: bool = None
  
 
 @app.get("/")
@@ -83,7 +83,7 @@ def delete_course(course_id: int):
     return {"message": "deleted successfully"}    
 
 @app.get("/config")
-def config_data(view_id: int | None = None):
+def config_data(view_id: Union[int, None] = None):
     print(view_id)
     
     config_data = [

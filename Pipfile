@@ -4,13 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
+fastapi = "==0.63.0"
 gunicorn = "*"
 pymssql = "*"
 uvicorn = "*"
 requests = "*"
+click = "==7.1.2"
+h11 = "==0.12.0"
+pydantic = "==1.8.1"
+starlette = "==0.13.6"
+typing-extensions = "==3.7.4.3"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.09"

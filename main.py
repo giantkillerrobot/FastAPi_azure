@@ -563,7 +563,17 @@ def config_data():
 {"id" : "4785", "task" : "Final TAB Tool", "task_parent_name" : "Ductwork Procedure T18", "task_group_name" : "TAB Final", "item_name" : "A57P_19_WZ-Spec Gas-PV-Yes-PT Only-A57P-wo-523", "assignees" : "TAB Tech", "status" : "Not Ready To Do", "percent_complete" : "0", "prerequisite_status" : "Exist", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "complete final TAB, complete Process Tool TAB Report, attach report", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : "cm_663300"}
 ]
 
-    dict_config =  { "config_data": config_data, "dataset": dataset }
+    task_field_visible = 1
+    task_field_editable = 1
+    task_lbl = "Task Summary Test"
+					  							  		
+
+    dict_config =  { 
+    "config_data": config_data, 
+    "dataset": dataset ,  
+    "task_field_visible": task_field_visible,
+    "task_field_editable": task_field_editable, 
+    "task_lbl" : task_lbl}
 
     return dict_config
 

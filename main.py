@@ -3,12 +3,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi import Response
 from fastapi.middleware.cors import CORSMiddleware
+from api.api_v1.api import router as api_router
 import pymssql
 import json
 import requests
 
 
 app = FastAPI()
+
+app.include_router(api_router, prefix="/api/v1")
 
 origins = [
     "http://localhost:1580",
@@ -80,10 +83,11 @@ def delete_course(course_id: int):
     return {"message": "deleted successfully"}    
 
 @app.get("/config")
-def config_data():
-
+def config_data(view_id: int | None = None):
+    print(view_id)
+    
     config_data = [
-  {
+      {
     "id": "book",
     "header": {
       "text": "&nbsp;",
@@ -301,9 +305,8 @@ def config_data():
     "hidden": 1
   }
 ]
-
     dataset = [
-{"id" : "2744", "task" : "Ductwork Procedure T1 TEST", "task_parent_name" : "", "task_group_name" : "", "item_name" : "J23W_15_UPW-Vacuum-UPW-Yes-Ben Kraft-PT Only-J23W-wo-321", "assignees" : "", "status" : "Ready To Do (Backlog)", "percent_complete" : "", "prerequisite_status" : "None", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "no AT or PT", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : ""},
+      {"id" : "2744", "task" : "Ductwork Procedure T1 TEST", "task_parent_name" : "", "task_group_name" : "", "item_name" : "J23W_15_UPW-Vacuum-UPW-Yes-Ben Kraft-PT Only-J23W-wo-321", "assignees" : "", "status" : "Ready To Do (Backlog)", "percent_complete" : "", "prerequisite_status" : "None", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "no AT or PT", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : ""},
 {"id" : "2745", "task" : "Construct", "task_parent_name" : "Ductwork Procedure T1", "task_group_name" : "Construct", "item_name" : "K19L-Yes-Ben Kraft-K19L-wo-428", "assignees" : "Piping Trade", "status" : "Ready To Do (Backlog)", "percent_complete" : "", "prerequisite_status" : "None", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "e.g., construct, start Walkdown Report & email to QAR", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : "cm_000000"},
 {"id" : "2746", "task" : "Walkdown", "task_parent_name" : "Ductwork Procedure T1", "task_group_name" : "Walkdown", "item_name" : "Item C-Matt Musil-Varian1-Hello5Goodbye5--12-1\/15\/2022", "assignees" : "QAR", "status" : "Not Ready To Do", "percent_complete" : "", "prerequisite_status" : "Exist", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "final walk, confirm LPOC & TPOC labels, complete Walkdown Report, attach report, fill out Piping Walk ADF", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : "cm_33cc33"},
 {"id" : "2747", "task" : "Rough TAB Tool", "task_parent_name" : "Ductwork Procedure T1", "task_group_name" : "TAB Rough", "item_name" : "60522-6522AA", "assignees" : "TAB Tech", "status" : "Not Ready To Do", "percent_complete" : "", "prerequisite_status" : "None", "additional_data_type_form_name" : "", "file_count" : "", "task_details" : "open Dampers half way", "comments" : "", "actual_labor_time" : "", "task_group_color_id" : "cm_996600"},
@@ -567,13 +570,11 @@ def config_data():
     task_field_editable = 1
     task_lbl = "Task Summary Test"
 					  							  		
-
     dict_config =  { 
     "config_data": config_data, 
     "dataset": dataset ,  
     "task_field_visible": task_field_visible,
     "task_field_editable": task_field_editable, 
     "task_lbl" : task_lbl}
-
+    
     return dict_config
-

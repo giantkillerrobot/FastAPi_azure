@@ -3,11 +3,11 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi import Response
 from fastapi.middleware.cors import CORSMiddleware
-from api.api_v1.api import router as api_router
 import pymssql
 import json
 import requests
 
+from api.api_v1.api import router as api_router
 
 app = FastAPI()
 
@@ -60,27 +60,108 @@ def db_test():
     conn.close()
     return Response(content=json_string, media_type='application/json')
 
+@app.get("/db_dataset")
+def db_dataset(view_id: int):
+    try:
+        conn = pymssql.connect(
+        server="40.114.74.64",
+        port=1401,
+        user="amvmdev23",
+        password="AMvmdev-2023!",
+        database="AM_PRIME_2_DEV")
+        
+        
+    except Exception as e:
+        print("e==",e)
+        return str(e)
+    
+    cursor = conn.cursor(as_dict=True)
+    sql = f'select compiled_query from [view] where id = {view_id}'
 
-@app.get("/courses")
-def get_courses():
-    return fakedb
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    sql = row['compiled_query']
+    cursor.execute(sql)
+    json_string = json.dumps(cursor.fetchall(), default=str) 
+    conn.close()
+    return Response(content=json_string, media_type='application/json')
 
 
-@app.get("/courses/{course_id}")
-def get_course(course_id:int):
-    course = course_id - 1
-    return fakedb[course]
+@app.get("/db_config_dataset")
+def db_config_dataset(view_id: int):
+    try:
+        conn = pymssql.connect(
+        server="40.114.74.64",
+        port=1401,
+        user="amvmdev23",
+        password="AMvmdev-2023!",
+        database="AM_PRIME_2_DEV")
+        
+        
+    except Exception as e:
+        print("e==",e)
+        return str(e)
+    
+    cursor = conn.cursor(as_dict=True)
+    sql = f'select compiled_webix_view from [view] where id = {view_id}'
+
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    config_json = row['compiled_webix_view']
+    config_data = config_json #json.loads(config_json)
+
+    sql = f'select compiled_query from [view] where id = {view_id}'
+
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    sql = row['compiled_query']
+    cursor.execute(sql)
+    dataset = cursor.fetchall()
+
+    conn.close()
+
+    task_field_visible = 1
+    task_field_editable = 1
+    task_lbl = "Task Summary Test"
+					  							  		
+    dict_config =  { 
+    "config_data": config_data, 
+    "dataset": dataset ,  
+    "task_field_visible": task_field_visible,
+    "task_field_editable": task_field_editable, 
+    "task_lbl" : task_lbl}
 
 
-@app.post("/courses")
-def add_course(course: Course):
-    fakedb.append(course.dict())
-    return fakedb[-1]
+    return dict_config #Response(content=dict_config, media_type='application/json')
 
-@app.delete("/courses")
-def delete_course(course_id: int):
-    fakedb.pop(course_id - 1)
-    return {"message": "deleted successfully"}    
+
+
+
+@app.get("/db_config")
+def db_dataset(view_id: int):
+    try:
+        conn = pymssql.connect(
+        server="40.114.74.64",
+        port=1401,
+        user="amvmdev23",
+        password="AMvmdev-2023!",
+        database="AM_PRIME_2_DEV")
+        
+        
+    except Exception as e:
+        print("e==",e)
+        return str(e)
+    
+    cursor = conn.cursor(as_dict=True)
+    sql = f'select compiled_webix_view from [view] where id = {view_id}'
+
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    json_string = row['compiled_webix_view']
+    conn.close()
+    return Response(content=json_string, media_type='application/json')
+
+
 
 @app.get("/config")
 def config_data(view_id: Union[int, None] = None):

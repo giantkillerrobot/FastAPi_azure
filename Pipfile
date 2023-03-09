@@ -18,4 +18,4 @@ typing-extensions = "==3.7.4.3"
 [dev-packages]
 
 [requires]
-python_version = "3.09"
+python_version = "3.9"

@@ -55,7 +55,7 @@ def db_test():
         return str(e)
     
     cursor = conn.cursor(as_dict=True)
-    cursor.execute('SELECT name_last, name_first, current_latest_position FROM people')
+    cursor.execute('SELECT id, name_first, name_last, current_latest_position FROM people')
     json_string = json.dumps(cursor.fetchall()) 
     conn.close()
     return Response(content=json_string, media_type='application/json')

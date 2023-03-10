@@ -82,7 +82,8 @@ def db_dataset(view_id: int):
     row = cursor.fetchone()
     sql = row['compiled_query']
     cursor.execute(sql)
-    json_string = json.dumps(cursor.fetchall(), default=str) 
+    json_string = json.dumps(cursor.fetchall(), default=str)
+    json_string = json_string.replace("null", "\"\"")
     conn.close()
     return Response(content=json_string, media_type='application/json')
 

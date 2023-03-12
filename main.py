@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pymssql
 import json
 import requests
+import os
 
 from api.api_v1.api import router as api_router
 
@@ -38,6 +39,12 @@ class Course(BaseModel):
 def get_home():
     ip = requests.get('https://api.ipify.org').text
     return {"message": f" my ip is {ip}"}
+
+@app.get("/env")
+def get_env():
+    env = os.environ['api_key']
+    ip = requests.get('https://api.ipify.org').text
+    return {"message": f" my ip is {ip} with env: {env}"}
 
 @app.get("/db")
 def db_test():
